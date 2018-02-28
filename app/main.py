@@ -111,7 +111,7 @@ def move():
     }
 
 
-@bottle.post('/')
+@bottle.get('/')
 def index():
     return "Naive Snake - 1.0"
 
