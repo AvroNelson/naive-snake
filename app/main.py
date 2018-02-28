@@ -111,9 +111,13 @@ def move():
     }
 
 
+@bottle.post('/')
+def index():
+    return "Naive Snake - 1.0"
+
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
 if __name__ == '__main__':
     bottle.run(application,
-               host=os.getenv('IP', '10.4.19.129'),
-               port=os.getenv('PORT', '8082'))
+               host=os.getenv('IP', '0.0.0.0'),
+               port=os.getenv('PORT', '8080'))
