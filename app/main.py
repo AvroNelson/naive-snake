@@ -1,9 +1,25 @@
+import random
+
 import bottle
 import os
 from app.battle_snake_world_state import SnakeWorld
 from app.naive_snake_move_calculator import NaiveSnakeMoveCalculator
-from pypaths import astar
 
+
+HAPPY_SNAKE_TAUNTS = [
+    "Today sure looks like a nice day!",
+    "Stay positive and happy",
+    "Keep your face in the sunshine",
+    "I am a successful snake, and I can do it!",
+    "Work hard and stay positive!",
+    "I Sure Hope This Works Out!",
+    "Hard work pays off!"
+]
+
+
+def get_next_taunt():
+    taunt_index = random.randint(0, len(HAPPY_SNAKE_TAUNTS) - 1)
+    return HAPPY_SNAKE_TAUNTS[taunt_index]
 
 
 @bottle.route('/static/<path:path>')
@@ -21,7 +37,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': "Gosh gee golly, I sure hope this all works out!",
+        'taunt': get_next_taunt(),
         'head_url': head_url,
         'name': 'Naive Snake'
     }
@@ -37,17 +53,17 @@ def move():
     next_move = calc.get_next_move()
     return {
         'move': next_move,
-        'taunt': 'I Sure Hope This Works Out!'
+        'taunt': get_next_taunt()
     }
 
 
 @bottle.get('/')
 def index():
-    return "Naive Snake - 1.0"
+    return "Naive Snake - 1.1"
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
 if __name__ == '__main__':
     bottle.run(application,
                host=os.getenv('IP', '0.0.0.0'),
-               port=os.getenv('PORT', '8081'))
+               port=os.getenv('PORT', '8082'))
