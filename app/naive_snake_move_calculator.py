@@ -27,10 +27,6 @@ class NaiveSnakeMoveCalculator(object):
             # Calculate the path to each piece of food on the map
             food_paths = map(lambda food: path_finder(my_head, food), self.world_state.food)
 
-            # If our first item has a weight of none then we could not path to it
-            if food_paths[0][0] is None:
-                return None
-
             # remove dead paths
             valid_path = filter(lambda path: path[0] is not None, food_paths)
 
