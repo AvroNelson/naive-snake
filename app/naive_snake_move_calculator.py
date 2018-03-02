@@ -31,10 +31,16 @@ class NaiveSnakeMoveCalculator(object):
             if food_paths[0][0] is None:
                 return None
 
+            # remove dead paths
+            valid_path = filter(lambda path: path[0] is not None, food_paths)
+
+            if len(valid_path) == 0:
+                return None
+
             # All we care about is how long is this path and
             # what is my first step on it
             # Notice we are not passing the first point returned, that is the head of our snake
-            return map(lambda path: FoodOption(distance=path[0], first_step=path[1][1]), food_paths)
+            return map(lambda path: FoodOption(distance=path[0], first_step=path[1][1]), valid_path)
 
         def get_random_path():
 

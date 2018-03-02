@@ -59,7 +59,7 @@ def move():
 
 @bottle.get('/')
 def index():
-    return "Naive Snake - 1.1"
+    return "Naive Snake - 1.2"
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
