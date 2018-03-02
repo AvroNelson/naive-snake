@@ -1,3 +1,4 @@
+import random
 from collections import namedtuple
 
 from app.battle_snake_world_state import BATTLE_SNAKE_RESPONSE_MOVE_RIGHT, BATTLE_SNAKE_RESPONSE_MOVE_LEFT, \
@@ -22,13 +23,38 @@ class NaiveSnakeMoveCalculator(object):
         path_finder = astar.pathfinder(neighbors=self.get_neighbors)
         my_head = self.world_state.me.body[0]
 
-        # Calculate the path to each piece of food on the map
-        food_paths = map(lambda food: path_finder(my_head, food), self.world_state.food)
+        def get_path_to_food():
+            # Calculate the path to each piece of food on the map
+            food_paths = map(lambda food: path_finder(my_head, food), self.world_state.food)
 
-        # All we care about is how long is this path and
-        # what is my first step on it
-        # Notice we are not passing the first point returned, that is the head of our snake
-        return map(lambda path: FoodOption(distance=path[0], first_step=path[1][1]), food_paths)
+            # If our first item has a weight of none then we could not path to it
+            if food_paths[0][0] is None:
+                return None
+
+            # All we care about is how long is this path and
+            # what is my first step on it
+            # Notice we are not passing the first point returned, that is the head of our snake
+            return map(lambda path: FoodOption(distance=path[0], first_step=path[1][1]), food_paths)
+
+        def get_random_path():
+
+            while True:
+                x = random.randint(0, self.world_state.map_width - 1)
+                y = random.randint(0, self.world_state.map_height - 1)
+
+                new_path = path_finder(my_head, (x, y))
+                if new_path[0] is not None:
+                    return new_path
+
+                print "Testing new random path"
+
+        food_optins = get_path_to_food()
+
+        if food_optins is None:
+            new_path = get_random_path()
+            return [FoodOption(distance=new_path[0], first_step=new_path[1][1])]
+
+        return food_optins
 
     def get_neighbors(self, point):
 
