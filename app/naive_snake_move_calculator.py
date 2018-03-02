@@ -43,19 +43,19 @@ class NaiveSnakeMoveCalculator(object):
 
     def is_valid_neighbor(self, point):
 
+        # Note: does teh grid start at 0?
+        x, y = point
+
+        if 0 > x or x >= self.world_state.map_width:
+            return False
+
+        if 0 > y or y >= self.world_state.map_height:
+            return False
+
         # We will never path into another snake or ourself
         if point in self.all_snake_points:
             return False
 
-        # Note: does teh grid start at 0?
-
-        if 0 > point[0] >= self.world_state.map_width:
-            return False
-
-        if 0 > point[1] >= self.world_state.map_height:
-            return False
-
-        # Point looks good to me
         return True
 
     def get_nearest_food(self):
@@ -86,6 +86,4 @@ class NaiveSnakeMoveCalculator(object):
 
     def get_next_move(self):
         nearest_food_option = self.get_nearest_food()
-        print nearest_food_option
-
         return self.get_direction_to_point(nearest_food_option.first_step)
