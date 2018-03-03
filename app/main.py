@@ -1,7 +1,7 @@
 import random
-
 import bottle
 import os
+
 from app.battle_snake_world_state import SnakeWorld
 from app.naive_snake_move_calculator import NaiveSnakeMoveCalculator
 
@@ -36,7 +36,7 @@ def start():
     )
 
     return {
-        'color': '#00FF00',
+        'color': '#44b5ad',
         'taunt': get_next_taunt(),
         'head_url': head_url,
         'name': 'Naive Snake'
@@ -59,7 +59,7 @@ def move():
 
 @bottle.get('/')
 def index():
-    return "Naive Snake - 1.2"
+    return "Naive Snake - 1.4"
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
