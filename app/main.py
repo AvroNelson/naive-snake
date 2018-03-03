@@ -30,7 +30,7 @@ def static(path):
 @bottle.post('/start')
 def start():
 
-    head_url = '%s://%s/static/head.png' % (
+    head_url = '%s://%s/static/snek.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
     )
